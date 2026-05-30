@@ -1,0 +1,128 @@
+[
+    {
+        "title": "Gurgaon Football League (GFL)",
+        "sport": "Football",
+        "date": "2026 (Tentative - check website for specific dates)",
+        "venue": "Various locations in Gurugram (check website)",
+        "age_group": "Under-9, Under-10, Under-11, Under-12, Under-14, Under-16 (ages 6 to 16 years)",
+        "type": "Offline",
+        "link": "https://www.hudle.in"
+    },
+    {
+        "title": "Gurugram Premier League (GPL) 2026",
+        "sport": "Cricket",
+        "date": "2026 (Registration for team owners, players, sponsors)",
+        "venue": "Gurugram & NCR",
+        "age_group": "Adults (Corporate professionals and passionate cricketers)",
+        "type": "Offline",
+        "link": "https://gurugrampremierleague.com/"
+    },
+    {
+        "title": "Local Cricket Tournaments in Gurugram",
+        "sport": "Cricket",
+        "date": "Ongoing (Check platform for specific tournament dates)",
+        "venue": "Various locations in Gurugram",
+        "age_group": "All Ages (Varies per tournament)",
+        "type": "Offline",
+        "link": "https://cricheroes.com/"
+    },
+    {
+        "title": "BWF World Championships 2026",
+        "sport": "Badminton",
+        "date": "August 17 - 23, 2026",
+        "venue": "Indira Gandhi Stadium, New Delhi",
+        "age_group": "All Ages (Professional tournament)",
+        "type": "Offline",
+        "link": "https://olympics.com/en/news/new-delhi-host-bwf-world-championships-2026-badminton-showpiece-returns-india"
+    },
+    {
+        "title": "All Stars Weekly Clash - Free Fire MAX",
+        "sport": "Free Fire MAX",
+        "date": "Weekly (Registration opens weekly)",
+        "venue": "Online",
+        "age_group": "All Ages",
+        "type": "Online",
+        "link": "https://www.instagram.com/gameclash.gg/"
+    },
+    {
+        "title": "KRAFTON India College Campus Tour 2026",
+        "sport": "BGMI and Real Cricket",
+        "date": "Through 2026 (On-campus registrations)",
+        "venue": "Across 128 colleges in India",
+        "age_group": "College Students",
+        "type": "Offline",
+        "link": "https://gamingamigos.in/"
+    },
+    {
+        "title": "Battlegrounds Mobile India Pro Series 2026",
+        "sport": "Battlegrounds Mobile India (BGMI)",
+        "date": "Starting June 02, 2026",
+        "venue": "India (likely online qualifiers with offline finals in New Delhi)",
+        "age_group": "All Ages (Professional players implied)",
+        "type": "Hybrid",
+        "link": "https://visitesports.com/events/india/new-delhi"
+    },
+    {
+        "title": "NEXUS E-Sports Series 2026",
+        "sport": "Esports",
+        "date": "Starting July 03, 2026",
+        "venue": "India",
+        "age_group": "All Ages",
+        "type": "Hybrid (likely online/offline)",
+        "link": "https://visitesports.com/events/india"
+    },
+    {
+        "title": "Tournament Season Q2",
+        "sport": "EA FC 26",
+        "date": "May 24, 2026 - July 26, 2026",
+        "venue": "Online",
+        "age_group": "All Ages",
+        "type": "Online",
+        "link": "https://www.toornament.com/en_US/games/5982823616641554432/tournaments"
+    },
+    {
+        "title": "Akwaaba FC26 Tournament",
+        "sport": "EA FC 26",
+        "date": "May 27, 2026 - May 31, 2026",
+        "venue": "Online",
+        "age_group": "All Ages",
+        "type": "Online",
+        "link": "https://www.toornament.com/en_US/games/5982823616641554432/tournaments"
+    },
+    {
+        "title": "FC 26 Viry Games",
+        "sport": "EA FC 26",
+        "date": "June 13, 2026",
+        "venue": "Online",
+        "age_group": "All Ages",
+        "type": "Online",
+        "link": "https://www.toornament.com/en_US/games/5982823616641554432/tournaments"
+    },
+    {
+        "title": "Tournoi FC27 1v1 DGF 26",
+        "sport": "EA FC 27",
+        "date": "November 1, 2026",
+        "venue": "Online",
+        "age_group": "All Ages",
+        "type": "Online",
+        "link": "https://www.toornament.com/en_US/games/5982823616641554432/tournaments"
+    },
+    {
+        "title": "ESCOM 2026 - eSports Community and Industry Summit",
+        "sport": "Esports (Summit with Gaming Zone)",
+        "date": "August 07 - 08, 2026",
+        "venue": "New Delhi, India",
+        "age_group": "All Ages (Industry professionals and enthusiasts)",
+        "type": "Offline",
+        "link": "https://escom.co/"
+    },
+    {
+        "title": "India Rising",
+        "sport": "Chess (Esports)",
+        "date": "May 18, 2026 (Open Qualifiers) - May 24, 2026 (Playoffs), Finals soon after",
+        "venue": "Online Qualifiers, Finals in Mumbai",
+        "age_group": "All Ages (Professionals and amateurs worldwide)",
+        "type": "Hybrid",
+        "link": "https://www.chess.com/news/view/india-rising-tournament-esports-world-cup"
+    }
+]
