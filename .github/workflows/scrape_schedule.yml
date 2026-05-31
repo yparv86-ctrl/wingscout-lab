@@ -1,0 +1,38 @@
+name: Autonomous Tournament Scraper Sync
+
+on:
+  schedule:
+    # This tells GitHub to run your scraper automatically every day at 6:00 AM UTC
+    - cron: '0 6 * * *'
+  workflow_dispatch: # This allows you to also trigger it manually with a single click on GitHub
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository files
+      uses: actions/checkout@v3
+
+    - name: Set up Python Environment
+      uses: actions/setup-python@v4
+      with:
+        python-python: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Execute Scraper Execution Engine
+      env:
+        # This securely feeds the key you saved in GitHub secrets to the scraper script
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      run: python updater.py
+
+    - name: Commit and Push Database Changes
+      run: |
+        git config --global user.name "WingScout Automated Bot"
+        git config --global user.email "bot@wingscout.internal"
+        git add tournaments.json
+        git diff-index --quiet HEAD || git commit -m "Auto-sync latest tournament nodes"
+        git push
