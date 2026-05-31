@@ -4,6 +4,135 @@ import os
 import urllib.parse
 from google import genai
 from google.genai import types
+import pandas as pd  # <-- Make sure this line is here!
+
+# ==========================================
+# ADDED TELEMETRY ENGINE FUNCTIONS (START)
+# ==========================================
+TELEMETRY_FILE = "player_telemetry.json"
+
+def load_telemetry_data():
+    """Loads player telemetry records safely into a structured Pandas DataFrame."""
+    default_schema = {
+        "Match Date": ["2026-05-10", "2026-05-17", "2026-05-24"],
+        "Opponent": ["Gurugram Academy", "Delhi United FC", "Noida Strikers"],
+        "Sprint Speed (km/h)": [28.4, 29.1, 31.2],
+        "Successful Dribbles": [4, 3, 6],
+        "Goals": [1, 0, 2],
+        "Assists": [0, 2, 1]
+    }
+    
+    if not os.path.exists(TELEMETRY_FILE):
+        df = pd.DataFrame(default_schema)
+        df["Match Date"] = pd.to_datetime(df["Match Date"])
+        df.to_json(TELEMETRY_FILE, orient="records", date_format="iso", indent=4)
+        return df
+    
+    try:
+        df = pd.read_json(TELEMETRY_FILE)
+        if not df.empty:
+            df["Match Date"] = pd.to_datetime(df["Match Date"])
+        else:
+            df = pd.DataFrame(columns=list(default_schema.keys()))
+        return df
+    except Exception as e:
+        st.error(f"Telemetry stream corruption detected: {e}")
+        return pd.DataFrame(columns=list(default_schema.keys()))
+
+def save_telemetry_data(df):
+    """Commits tracking records to disk securely without destructive overrides."""
+    try:
+        df_to_save = df.copy()
+        if not df_to_save.empty and "Match Date" in df_to_save.columns:
+            df_to_save["Match Date"] = df_to_save["Match Date"].dt.strftime('%Y-%m-%d')
+        df_to_save.to_json(TELEMETRY_FILE, orient="records", indent=4)
+    except Exception as e:
+        st.error(f"Critical write fault on telemetry storage file: {e}")
+
+def render_telemetry_analytics_tab():
+    """Renders the elite data logging grid and time-series analytical visualization engine."""
+    st.markdown("## 📊 Telemetry & Performance Tracking")
+    st.markdown("Log game-day physical outputs and offensive contributions to visualize developmental velocity over time.")
+    
+    if "telemetry_df" not in st.session_state:
+        st.session_state.telemetry_df = load_telemetry_data()
+        
+    current_df = st.session_state.telemetry_df
+
+    column_configuration = {
+        "Match Date": st.column_config.DateColumn(
+            "Match Date",
+            help="Select the tournament or match matchday calendar interval",
+            required=True,
+            format="YYYY-MM-DD"
+        ),
+        "Opponent": st.column_config.TextColumn(
+    "Opponent Team",
+    required=True
+),
+        "Sprint Speed (km/h)": st.column_config.NumberColumn(
+            "Max Sprint Speed (km/h)",
+            help="Peak physical speed recorded via tracking system",
+            min_value=0.0,
+            max_value=50.0,
+            format="%.2f km/h"
+        ),
+        "Successful Dribbles": st.column_config.NumberColumn(
+            "Successful Dribbles",
+            help="Total completed progressive carries beat an opponent",
+            min_value=0,
+            step=1
+        ),
+        "Goals": st.column_config.NumberColumn(
+            "Goals Scored",
+            min_value=0,
+            step=1
+        ),
+        "Assists": st.column_config.NumberColumn(
+            "Assists Delivered",
+            min_value=0,
+            step=1
+        )
+    }
+
+    edited_df = st.data_editor(
+        current_df,
+        column_config=column_configuration,
+        num_rows="dynamic",
+        use_container_width=True,
+        key="telemetry_editor_matrix"
+    )
+
+    if not edited_df.equals(current_df):
+        if not edited_df.empty and "Match Date" in edited_df.columns:
+            edited_df["Match Date"] = pd.to_datetime(edited_df["Match Date"])
+            
+        st.session_state.telemetry_df = edited_df
+        save_telemetry_data(edited_df)
+        st.toast("Telemetry matrix synced successfully!", icon="💾")
+        st.rerun()
+
+    st.markdown("---")
+    st.markdown("### 📈 Tactical Analytics & Kinetic Projections")
+
+    if edited_df.empty:
+        st.info("Log your first match above to view trends.")
+        return
+
+    chart_df = edited_df.copy().sort_values(by="Match Date")
+    chart_df["Timeline Label"] = chart_df["Match Date"].dt.strftime('%b %d') + " vs " + chart_df["Opponent"].astype(str)
+    chart_df = chart_df.set_index("Timeline Label")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("#### Chart A: Velocity & Ball Mastery Tracking")
+        st.line_chart(chart_df[["Sprint Speed (km/h)", "Successful Dribbles"]], use_container_width=True)
+    with col2:
+        st.markdown("#### Chart B: Combined Offensive Output Progression")
+        st.bar_chart(chart_df[["Goals", "Assists"]], use_container_width=True)
+# ==========================================
+# ADDED TELEMETRY ENGINE FUNCTIONS (END)
+# ==========================================
 
 # --- 1. CONFIGURATION & PRODUCTION STORAGE MANAGEMENT ---
 DATABASE_FILE = "tournaments.json"
@@ -415,7 +544,14 @@ for t in tournaments:
 
 
 # --- 7. COMPONENT ROUTER DISPLAY TABS ---
-tab1, tab2, tab3, tab4 = st.tabs(["⚽ Football Hub", "🏀 Alternate Sports", "🌐 Simulation Vectors", "⭐ Watchlist Matrix"])
+# UPDATED: Added tab5 and "📊 Performance Telemetry" to the array
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    "⚽ Football Hub", 
+    "🏀 Alternate Sports", 
+    "🌐 Simulation Vectors", 
+    "⭐ Watchlist Matrix",
+    "📊 Performance Telemetry"
+])
 
 with tab1:
     football_events = [t for t in filtered_tournaments if t.get('sport', '').lower() == 'football']
@@ -447,3 +583,9 @@ with tab4:
     for idx, event in enumerate(watchlist):
         with st.expander(f"⭐ {event.get('title', 'Pinned Node')} — [{event.get('date', 'TBD')}]"):
             render_tournament_bot(event, f"watch_tab_{idx}")
+
+# ==========================================
+# ADDED: TARGET INJECTION POINT FOR TAB 5
+# ==========================================
+with tab5:
+    render_telemetry_analytics_tab()
