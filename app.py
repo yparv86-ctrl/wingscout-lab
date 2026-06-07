@@ -130,6 +130,25 @@ def render_telemetry_analytics_tab():
     with col2:
         st.markdown("#### Chart B: Combined Offensive Output Progression")
         st.bar_chart(chart_df[["Goals", "Assists"]], use_container_width=True)
+
+    # --- EXPORT INTERFACE ---
+    st.markdown("---")
+    
+    # Prepare CSV data for export
+    export_df = edited_df.copy()
+    if not export_df.empty and "Match Date" in export_df.columns:
+        # Standardize date format for CSV compatibility
+        export_df["Match Date"] = pd.to_datetime(export_df["Match Date"]).dt.strftime('%Y-%m-%d')
+    
+    csv_bytes = export_df.to_csv(index=False).encode('utf-8')
+    
+    st.download_button(
+        label="📥 Export Athlete Telemetry to CSV",
+        data=csv_bytes,
+        file_name=f"wingscout_telemetry_{user_profile.get('name', 'athlete').replace(' ', '_').lower()}.csv",
+        mime="text/csv",
+        help="Download the complete telemetry matrix as a CSV file for external analysis."
+    )
 # ==========================================
 # ADDED TELEMETRY ENGINE FUNCTIONS (END)
 # ==========================================
