@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+.env
+.flaskenv
+.streamlit/config.toml
+.DS_Store
+*.json
+!tournaments.json
+!watchlist.json
+!profile.json
+!player_telemetry.json
